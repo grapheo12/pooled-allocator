@@ -8,12 +8,12 @@
 
 int main()
 {
-    size_t sz = 20 GB;
+    size_t sz = 100 GB;
     auto arena = new Arena(sz);
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<size_t> dist1(0, 20 GB - 1);
+    std::uniform_int_distribution<size_t> dist1(0, sz - 1);
     std::uniform_int_distribution<size_t> dist2(0, 1);
 
     using namespace std::chrono;
@@ -36,7 +36,7 @@ int main()
     
 
     std::cout << "Total time for " << OPS << "operations: " << (duration_cast<milliseconds>(end - start)).count() << "ms" << std::endl;
-
     std::cout << "Throughput: " << ((double)OPS / (duration_cast<milliseconds>(end - start)).count()) * 1e+3 << "ops/s" << std::endl;
+    std::cout << "Size: " << sz << std::endl;
     return 0;
 }

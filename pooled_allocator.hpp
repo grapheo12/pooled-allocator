@@ -2,6 +2,7 @@
 
 #include <sys/types.h>
 #include <string>
+#include <cstring>
 
 #define ARENA_USE_HUGEPAGES
 
