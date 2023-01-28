@@ -1,10 +1,13 @@
 #pragma once
 
 #include <sys/types.h>
+#include <sys/mman.h>
+#include <stdlib.h>
 #include <string>
 #include <cstring>
 
 #define ARENA_USE_HUGEPAGES
+#define ARENA_HUGEPAGE_SIZE (1 << 21)                   // 2 MiB hugepage
 
 class Arena
 {
@@ -17,7 +20,8 @@ class Arena
             :sz(sz)
         {
             #ifdef ARENA_USE_HUGEPAGES
-                data = new char[sz];
+                posix_memalign((void **)&data, ARENA_HUGEPAGE_SIZE, sz);
+                madvise(data, sz, MADV_HUGEPAGE);                   // Specific to Linux only
             #else
                 data = new char[sz];
             #endif

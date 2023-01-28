@@ -8,7 +8,7 @@
 
 int main()
 {
-    size_t sz = 100 GB;
+    size_t sz = 20 GB;
     auto arena = new Arena(sz);
 
     std::random_device rd;
