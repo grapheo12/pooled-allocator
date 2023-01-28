@@ -26,6 +26,15 @@ class Arena
             #endif
         }
 
+        ~Arena()
+        {
+            #ifdef USE_MIMALLOC
+                mi_free(data);
+            #else
+                free(data);
+            #endif
+        }
+
         size_t Read(off_t offset, char *dst, size_t n)
         {
             size_t limit = n;
