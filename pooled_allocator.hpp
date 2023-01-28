@@ -5,9 +5,9 @@
 #include <stdlib.h>
 #include <string>
 #include <cstring>
+#include <mimalloc.h>
 
-#define ARENA_USE_HUGEPAGES
-#define ARENA_HUGEPAGE_SIZE (1 << 21)                   // 2 MiB hugepage
+#define USE_MIMALLOC
 
 class Arena
 {
@@ -19,11 +19,10 @@ class Arena
         Arena(size_t sz)
             :sz(sz)
         {
-            #ifdef ARENA_USE_HUGEPAGES
-                posix_memalign((void **)&data, ARENA_HUGEPAGE_SIZE, sz);
-                madvise(data, sz, MADV_HUGEPAGE);                   // Specific to Linux only
+            #ifdef USE_MIMALLOC
+                data = (char *)mi_malloc(sz * sizeof(char));
             #else
-                data = new char[sz];
+                data = (char *)malloc(sz * sizeof(char));
             #endif
         }
 
