@@ -17,7 +17,7 @@ int main()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<size_t> dist1(0, sz - 1);
     std::uniform_int_distribution<size_t> dist2(0, 1);
-    char __data[500 MB];
+    char *__data = new char[500 MB];
     memset(__data, 'A', 500 MB);
 
     using namespace std::chrono;
@@ -43,6 +43,7 @@ int main()
     std::cout << "Arena Size: " << sz << " Read/Write chunk size: " << 500 MB << std::endl;
 
     delete arena;
+    delete __data;
     
     return 0;
 }

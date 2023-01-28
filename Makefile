@@ -7,4 +7,4 @@ clean:
 
 .PHONY: run
 run:
-	MIMALLOC_SHOW_STATS=1 ./benchmark
+	MIMALLOC_SHOW_STATS=1 MIMALLOC_LARGE_OS_PAGES=1 ./benchmark
